@@ -96,23 +96,13 @@
             margin-top: 30px;
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 20px;
+            color: #EBBE88;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #EBBE88;
-            animation: blink 1.5s infinite;
-        }
-
-        .dot:nth-child(2) { animation-delay: 0.3s; }
-        .dot:nth-child(3) { animation-delay: 0.6s; }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
+            opacity: 0.8;
         }
 
         #main-content {
@@ -613,7 +603,7 @@
         }
 
         .signature-section .name {
-            font-size: 30px;
+            font-size: 24px;
             color: #064747;
             font-family: 'Ma Shan Zheng', cursive;
             letter-spacing: 6px;
@@ -690,12 +680,12 @@
         <div class="password-card">
             <h1>致刘雅男老师</h1>
             <p class="subtitle">—— 一封迟到的成长汇报</p>
-            <p class="hint">开启记忆的密码 - 播下种子的那年</p>
-            <input type="password" id="password-input" class="password-input" placeholder="请输入6位密码" maxlength="6">
+            <p class="hint">开启记忆的密码</p>
+            <input type="password" id="password-input" class="password-input" placeholder="播下种子的那年" maxlength="6">
             <div class="password-dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+                <span class="dot">❀</span>
+                <span class="dot">❀</span>
+                <span class="dot">❀</span>
             </div>
         </div>
     </div>
@@ -1069,9 +1059,9 @@
         const scrollIcon = document.getElementById('scroll-icon');
         const firstSection = document.getElementById('first-section');
 
-        passwordInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                if (this.value === '202010') {
+        function checkPassword() {
+            if (passwordInput.value.length === 6) {
+                if (passwordInput.value === '202010') {
                     passwordLayer.classList.add('hidden');
                     mainContent.classList.add('visible');
                     setTimeout(() => {
@@ -1082,13 +1072,23 @@
                         initScrollAnimations();
                     }, 500);
                 } else {
-                    this.value = '';
-                    this.placeholder = '密码错误，请重试';
+                    passwordInput.value = '';
+                    passwordInput.placeholder = '密码错误，请重试';
                     setTimeout(() => {
-                        this.placeholder = '请输入6位密码';
+                        passwordInput.placeholder = '播下种子的那年';
                     }, 2000);
                 }
             }
+        }
+
+        passwordInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        passwordInput.addEventListener('input', function() {
+            checkPassword();
         });
 
         musicControl.addEventListener('click', function() {
